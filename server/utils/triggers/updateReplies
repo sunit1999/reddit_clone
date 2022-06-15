@@ -1,0 +1,44 @@
+const updateReplies = async (instance, options, sequelize) => {
+  const { postId, parentCommentId } = instance;
+  try {
+    const totalComments = await sequelize.models.Comment.count({
+      where: {
+        postId,
+      },
+    });
+
+    await sequelize.models.Post.update(
+      {
+        totalComments,
+      },
+      {
+        where: {
+          postId,
+        },
+      }
+    );
+
+    if (parentCommentId) {
+      const totalReplies = await sequelize.models.Comment.count({
+        where: {
+          parentCommentId,
+        },
+      });
+
+      await sequelize.models.Comment.update(
+        {
+          totalReplies,
+        },
+        {
+          where: {
+            commentId: parentCommentId,
+          },
+        }
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = updateReplies;

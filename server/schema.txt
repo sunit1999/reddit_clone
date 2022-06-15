@@ -1,0 +1,21 @@
+user (userId PK, username, firstname, lastname, email, password);
+post (postId PK, title, content, authorId (FK));
+subreddit (subredditId, name, description, creatorId (FK), totalMembers);
+comment (commentId, commenterId (FK), postId (FK), parentCommentId, content);
+vote (post_or_commentId (FK), isPostId, count); 
+
+Relationships: 
+
+1:1
+post and vote
+comment and vote
+
+1:M
+user and post
+user and subreddit
+user and comment
+post and comment
+comment and comment
+
+M:N
+user and subreddit (though SubredditMember)

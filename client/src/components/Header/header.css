@@ -1,0 +1,11 @@
+.app-header {
+  display: flex;
+  padding: .5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-logo {
+  font-size: 2rem;
+  font-weight: 900;
+}
