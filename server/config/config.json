@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root123",
+    "database": "reddit_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "root1234",
+    "database": "reddit_db",
+    "host": "redditdb.cjv3j7bkbrz3.us-west-1.rds.amazonaws.com",
+    "dialect": "mysql"
+  }
+}
