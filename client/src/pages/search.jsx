@@ -1,48 +1,38 @@
-import {
-  Box,
-  Card,
-  Divider,
-  Grid,
-  Group,
-  Loader,
-  Pagination,
-  Space,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Box, Grid, Loader, Pagination, Stack, Title } from "@mantine/core";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-import {
-  useGetAllPostsQuery,
-  useGetAllSubredditsQuery,
-} from "../app/api";
+import { useGetAllPostsQuery } from "../app/api";
 import PostList from "../components/Post/postList";
 import SortHeader from "../components/sortHeader/sortHeader";
 import {
   selectFeedParams,
   setFeedPage,
+  setFeedQuery,
   setFeedSortBy,
 } from "../slice/postSlice";
 
-const FeedPage = () => {
+const SearchPage = () => {
   const postParams = useSelector(selectFeedParams);
   const dispatch = useDispatch();
 
-  const { data, isLoading, isError } = useGetAllPostsQuery({ ...postParams });
+  useEffect(() => {
+    return () => dispatch(setFeedQuery(""));
+  }, [dispatch]);
 
-  const {
-    data: allSubs,
-    isLoading: isAllSubsLoading,
-    isError: isAllSubsError,
-  } = useGetAllSubredditsQuery({});
-  // console.log(allSubs);
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query");
+
+  const { data, isLoading, isError } = useGetAllPostsQuery({
+    ...postParams,
+    query,
+  });
 
   return (
     <Box sx={{ maxWidth: 1080 }} mx={"auto"}>
       <Title order={5} py="md">
-        Popular Posts
+        Search Results for "{query}"
       </Title>
       <Grid grow justify="center" align="flex-start">
         <Grid.Col span={8}>
@@ -71,7 +61,7 @@ const FeedPage = () => {
           </Stack>
         </Grid.Col>
         <Grid.Col span={4}>
-          <Card
+          {/* <Card
             shadow="sm"
             p="lg"
             sx={(theme) => ({
@@ -108,11 +98,11 @@ const FeedPage = () => {
               ))}
             {isAllSubsLoading && <Loader size="sm" />}
             {isAllSubsError && <div>Some error...</div>}
-          </Card>
+          </Card> */}
         </Grid.Col>
       </Grid>
     </Box>
   );
 };
 
-export default FeedPage;
+export default SearchPage;

@@ -10,6 +10,7 @@ const subredditRouter = require("../routes/subreddit");
 const postVoteRouter = require("../routes/post_vote");
 const commentVoteRouter = require("../routes/comment_vote");
 const commentRouter = require("../routes/comment");
+const userRouter = require("../routes/user");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -27,6 +28,7 @@ app.use("/api/v1/subreddit", subredditRouter);
 app.use("/api/v1/votes/post", postVoteRouter);
 app.use("/api/v1/votes/comment", commentVoteRouter);
 app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/user", userRouter);
 
 app.use("/", (req, res) => {
   res.json("basic page");

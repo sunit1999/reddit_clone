@@ -3,6 +3,8 @@ import { authReducer } from "../auth/authSlice";
 import { commentReducer } from "../slice/commentSlice";
 import { postReducer } from "../slice/postSlice";
 import { subredditReducer } from "../slice/subredditSlice";
+import { usersCommentReducer } from "../slice/usersCommentSlice";
+import { usersPostReducer } from "../slice/usersPostSlice";
 // import { counterReducer } from "../features/counter/counterSlice";
 import { redditApi } from "./api";
 
@@ -15,6 +17,8 @@ export const store = configureStore({
     postParams: postReducer,
     subredditParams: subredditReducer,
     commentParams: commentReducer,
+    usersPostParams: usersPostReducer,
+    usersCommentParams: usersCommentReducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.

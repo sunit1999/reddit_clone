@@ -22,8 +22,10 @@ export const redditApi = createApi({
       providesTags: (result, error, arg) => [{ type: "Post", id: arg }],
     }),
     getAllPosts: builder.query({
-      query: ({ page = 1, limit = 5, sortBy = "createdAt", query = "" }) =>
-        `posts?page=${page}&limit=${limit}&sortBy=${sortBy}&query=${query}`,
+      query: ({ page = 1, limit = 5, sortBy = "createdAt", query }) =>
+        query
+          ? `posts?page=${page}&limit=${limit}&sortBy=${sortBy}&query=${query}`
+          : `posts?page=${page}&limit=${limit}&sortBy=${sortBy}`,
       providesTags: (result, error, arg) =>
         result
           ? [
@@ -345,6 +347,17 @@ export const redditApi = createApi({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Comment", id: arg }],
     }),
+    getUsersPosts: builder.query({
+      query: ({ userId, page = 1, limit = 5, sortBy = "createdAt" }) =>
+        `user/${userId}/posts?page=${page}&limit=${limit}&sortBy=${sortBy}`,
+    }),
+    getUsersComments: builder.query({
+      query: ({ userId, page = 1, limit = 5, sortBy = "createdAt" }) =>
+        `user/${userId}/comments?page=${page}&limit=${limit}&sortBy=${sortBy}`,
+    }),
+    getUserProfile: builder.query({
+      query: (userId) => `user/${userId}`,
+    }),
   }),
 });
 
@@ -370,4 +383,7 @@ export const {
   useEditCommentMutation,
   useDeletePostMutation,
   useDeleteCommentMutation,
+  useGetUsersPostsQuery,
+  useGetUsersCommentsQuery,
+  useGetUserProfileQuery,
 } = redditApi;

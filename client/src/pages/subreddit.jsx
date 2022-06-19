@@ -58,7 +58,10 @@ const SubredditPage = () => {
             <Stack spacing="md">
               <SortHeader
                 value={postParams.sortBy}
-                setValue={(val) => dispatch(setSubsSortBy(val))}
+                setValue={(val) => {
+                  dispatch(setSubsPage(1));
+                  dispatch(setSubsSortBy(val));
+                }}
               />
               <PostList posts={data.posts} />
               <Pagination

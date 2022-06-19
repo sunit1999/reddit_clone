@@ -1,7 +1,6 @@
-import { Loader, Pagination } from "@mantine/core";
+import { Pagination } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useGetTopLevelCommentsQuery } from "../../app/api";
 import {
   selectCommentParams,
   setCommentPage,
@@ -10,38 +9,31 @@ import {
 import SortHeader from "../sortHeader/sortHeader";
 import Comment from "./comment";
 
-const CommentList = ({ postId }) => {
-  const dispatch = useDispatch();
+const CommentList = ({ data }) => {
   const commentParams = useSelector(selectCommentParams);
-  const { data, isLoading, isError } = useGetTopLevelCommentsQuery({
-    postId,
-    ...commentParams,
-  });
+  const dispatch = useDispatch();
 
   return (
     <>
-      {isLoading && <Loader size="sm" />}
-      {isError && <div>Error...</div>}
-      {data?.comments.length > 0 && (
-        <>
-          <SortHeader
-            value={commentParams.sortBy}
-            setValue={(val) => dispatch(setCommentSortBy(val))}
-            label="Replies"
-          />
+      <SortHeader
+        value={commentParams.sortBy}
+        setValue={(val) => {
+          dispatch(setCommentPage(1));
+          dispatch(setCommentSortBy(val));
+        }}
+        label="Replies"
+      />
 
-          {data.comments.map((comment) => (
-            <Comment key={comment.commentId} comment={comment} />
-          ))}
-          <Pagination
-            position="center"
-            boundaries={2}
-            page={commentParams.page}
-            onChange={(page) => dispatch(setCommentPage(page))}
-            total={Math.ceil(data.count / commentParams.limit)}
-          />
-        </>
-      )}
+      {data.comments.map((comment) => (
+        <Comment key={comment.commentId} comment={comment} />
+      ))}
+      <Pagination
+        position="center"
+        boundaries={2}
+        page={commentParams.page}
+        onChange={(page) => dispatch(setCommentPage(page))}
+        total={Math.ceil(data.count / commentParams.limit)}
+      />
     </>
   );
 };

@@ -3,11 +3,20 @@ const errorHandler = require("../utils/errorHandler");
 
 exports.getAllPosts = async (req, res, next) => {
   const voterId = req.userId || 0;
-  const { page, limit, sortBy } = req.query;
+  const { page, limit, sortBy, query } = req.query;
   const offset = (page - 1) * limit;
+
+  const whereOpts = {};
+
+  if (query) {
+    whereOpts.title = {
+      [Sequelize.Op.substring]: query,
+    };
+  }
 
   try {
     const posts = await sequelize.models.Post.findAll({
+      where: whereOpts,
       subQuery: false,
       attributes: {
         include: [[Sequelize.fn("MAX", Sequelize.col("value")), "hasVoted"]],
@@ -35,7 +44,7 @@ exports.getAllPosts = async (req, res, next) => {
       limit: parseInt(limit),
     });
 
-    const count = await sequelize.models.Post.count();
+    const count = await sequelize.models.Post.count({ where: whereOpts });
 
     res.status(200).json({ count, posts });
   } catch (error) {
@@ -139,12 +148,12 @@ exports.getPost = async (req, res, next) => {
       throw error;
     }
 
-    const hasVoted = await sequelize.models.PostVote.count({
-      where: {
-        postId,
-        voterId,
-      },
-    });
+    // const hasVoted = await sequelize.models.PostVote.count({
+    //   where: {
+    //     postId,
+    //     voterId,
+    //   },
+    // });
 
     res.status(200).json({
       post,
