@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 require("dotenv").config();
 const cors = require("cors");
+const path = require("path");
 
 const { sequelize } = require("../models");
 const authRouter = require("../routes/auth");
@@ -22,6 +23,7 @@ app.use(cors({
   origin: process.env.REACT_URL
 }))
 
+app.use(express.static(path.join(__dirname, "client/build")))
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/subreddit", subredditRouter);
