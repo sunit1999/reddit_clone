@@ -163,7 +163,7 @@ export const redditApi = createApi({
                 const idx = comments.findIndex(
                   (comment) => comment.commentId === parentCommentId
                 );
-                console.log(body, idx);
+                // console.log(body, idx);
                 if (idx !== -1) comments[idx].totalReplies++;
               }
             )
@@ -175,7 +175,7 @@ export const redditApi = createApi({
               "getRepliesOnComments",
               parentCommentId,
               (draft) => {
-                console.log(draft);
+                // console.log(draft);
                 draft.unshift(data);
               }
             )
@@ -204,7 +204,7 @@ export const redditApi = createApi({
       }),
       async onQueryStarted(body, { dispatch, queryFulfilled }) {
         const { postId, value, subredditId, ...postParams } = body;
-        console.log(body, postParams);
+        // console.log(body, postParams);
         const patchPost = dispatch(
           redditApi.util.updateQueryData("getPostById", postId, (draft) => {
             draft.post.totalVotes += value - draft.post.hasVoted;
@@ -266,7 +266,7 @@ export const redditApi = createApi({
             { postId, ...commentParams },
             ({ comments }) => {
               if (parentCommentId) return;
-              console.log(body);
+              // console.log(body);
               const idx = comments.findIndex(
                 (comment) => comment.commentId === commentId
               );
@@ -285,7 +285,7 @@ export const redditApi = createApi({
               const idx = draft.findIndex(
                 (comment) => comment.commentId === commentId
               );
-              console.log(idx);
+              // console.log(idx);
               draft[idx].totalVotes += value - draft[idx].hasVoted;
               draft[idx].hasVoted = value;
             }

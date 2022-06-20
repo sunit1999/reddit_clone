@@ -10,7 +10,8 @@ import { useSelector } from "react-redux";
 import { selectCommentParams } from "../slice/commentSlice";
 
 const CommentsPage = () => {
-  const { postId } = useParams();
+  let { postId } = useParams();
+  postId = parseInt(postId);
   const navigate = useNavigate();
   const commentParams = useSelector(selectCommentParams);
   const { data, isLoading, isError } = useGetPostByIdQuery(parseInt(postId));
