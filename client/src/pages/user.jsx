@@ -92,7 +92,7 @@ const UserPage = () => {
             <Tabs.Tab label="Comments">
               {isCommetsLoading && <Loader size="sm" />}
               {isCommentsError && <div>Error...</div>}
-              {commentsData && (
+              {commentsData?.comments.length > 0 && (
                 <Stack>
                   <SortHeader
                     value={usersCommentParams.sortBy}

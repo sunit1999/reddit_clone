@@ -12,14 +12,10 @@ const loginCheck = checkSchema({
 const signupCheck = checkSchema({
   username: {
     in: "body",
-    isAlphanumeric: {
-      errorMessage: "Username must be alphanumeric",
-    },
     isLength: {
       errorMessage: "Username should be 3 to 20 chars long",
       options: { min: 3, max: 20 },
     },
-    isEmpty: false,
     trim: true,
   },
   firstname: {
@@ -37,12 +33,9 @@ const signupCheck = checkSchema({
   lastname: {
     in: "body",
     optional: true,
-    isAlpha: {
-      errorMessage: "Lastname must contain only alphabets",
-    },
     isLength: {
       errorMessage: "Lastname should be 3 to 20 chars long",
-      options: { min: 3, max: 20 },
+      options: { min: 0, max: 20 },
     },
     trim: true,
   },
@@ -209,9 +202,7 @@ const createPostCheck = checkSchema({
   },
   title: {
     in: "body",
-    isAlphanumeric: true,
-    isEmpty: false,
-    isLength: { min: 1, max: 100 },
+    isLength: { min: 1, max: 500 },
     trim: true,
   },
   content: {
@@ -227,8 +218,6 @@ const updatePostCheck = checkSchema({
   },
   title: {
     in: "body",
-    isAlphanumeric: true,
-    isEmpty: false,
     isLength: { min: 1, max: 100 },
     trim: true,
   },
@@ -248,16 +237,12 @@ const deletePostCheck = checkSchema({
 const createSubredditCheck = checkSchema({
   name: {
     in: "body",
-    isAlphanumeric: true,
     isLength: { min: 1, max: 20 },
-    isEmpty: false,
     trim: true,
   },
   description: {
     in: "body",
-    isAlphanumeric: true,
-    isLength: { max: 200 },
-    isEmpty: true,
+    isLength: { min: 0, max: 200 },
     trim: true,
   },
 });
@@ -272,9 +257,7 @@ const subredditCheck = checkSchema({
 const allSubredditCheck = checkSchema({
   name: {
     in: "body",
-    isAlphanumeric: true,
     isLength: { min: 1, max: 20 },
-    isEmpty: false,
     trim: true,
     optional: true,
   },
@@ -299,16 +282,12 @@ const updateSubredditCheck = checkSchema({
   },
   name: {
     in: "body",
-    isAlphanumeric: true,
     isLength: { min: 1, max: 20 },
-    isEmpty: false,
     trim: true,
   },
   description: {
     in: "body",
-    isAlphanumeric: true,
-    isLength: { max: 200 },
-    isEmpty: true,
+    isLength: { min: 0, max: 200 },
     trim: true,
   },
 });

@@ -50,7 +50,7 @@ const CommentsPage = () => {
 
         {isCommentsLoading && <Loader size="sm" />}
         {isCommentsError && <div>Error...</div>}
-        {commentsData && <CommentList data={commentsData} />}
+        {commentsData?.comments.length > 0 && <CommentList data={commentsData} />}
       </Stack>
     </Stack>
   );
