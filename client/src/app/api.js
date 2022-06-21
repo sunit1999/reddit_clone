@@ -1,10 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_DEV_URL
+    : process.env.REACT_APP_PROD_URL;
+
 // Define a service using a base URL and expected endpoints
 export const redditApi = createApi({
   reducerPath: "redditApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BASE_URL,
+    baseUrl: BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
 
