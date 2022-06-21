@@ -39,7 +39,7 @@ app.get("/*", function (req, res) {
 
 // Error Handler
 app.use((err, req, res, next) => {
-  console.log("oops an error - ", err.name, typeof err.name);
+  console.log("oops an error - ", err);
 
   if (
     err.name.toLowerCase().includes("sequelize") &&
