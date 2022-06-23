@@ -8,8 +8,8 @@ const {
 } = require("../controllers/user");
 const isAuth = require("../middlewares/is-auth");
 
-router.get("/:authorId(\\d+)/posts", isAuth, getUsersPosts);
-router.get("/:commenterId(\\d+)/comments", isAuth, getUsersComments);
-router.get("/:userId(\\d+)", isAuth, getUsersProfile);
+router.get("/:authorId(\\d+)/posts", getUsersPosts);
+router.get("/:commenterId(\\d+)/comments", getUsersComments);
+router.get("/:userId(\\d+)", getUsersProfile);
 
 module.exports = router;
