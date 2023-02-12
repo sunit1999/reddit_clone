@@ -27,3 +27,6 @@ A website that replicates the popular website Reddit, with additional features a
 
 - Knowledge of Node.js, NPM, MySQL, and AWS
 - Ability to set up and manage a development environment
+
+## Screenshots
+<img src="screenshots/reddit_home.png" width="700">
